@@ -1,0 +1,37 @@
+spring:
+  data:
+    mongodb:
+      host: ${SPRING_DATA_MONGODB_HOST:localhost}
+      username: wiwadev
+      password: wiwadev
+      port: ${SPRING_DATA_MONGODB_PORT:27018}
+      database: product_db
+      authentication-database: admin
+  jackson: # This property ensures that dates are serialized in a human-readable format instead of timestamps
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+# Configuration Kafka
+  kafka:
+    producer:
+      bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: productEvent:com.buy01.product.dto.ProductDeleteEvent
+# Configuration JWT
+jwt:
+  secret: 0smkgpTVAhXxHq1lZEtvEySlVBr6U0OMN0NmLjWmJNxnTAsQaGPJ0AqsMVoQhrw9 # Secret key for signing JWT tokens
+  expiration: 86400000 # 1 day in milliseconds
+
+server:
+  port: 3001
+
+eureka:
+  instance:
+    prefer-ip-address: true        # 👈 force Eureka à utiliser ton IP locale
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}           # 👈 (optionnel) force l'utilisation de localhost
+    instance-id: ${spring.application.name}:${server.port}
+application:
+  config:
+    user-url: https://${GATEWAY_HOSTNAME:localhost}:8222/api/v1/users
+    media-url: https://${GATEWAY_HOSTNAME:localhost}:8222/api/v1/medias

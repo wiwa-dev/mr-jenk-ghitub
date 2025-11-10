@@ -1,0 +1,59 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        #############--------USER-------------#############
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/v1/users/**
+        ##############------PRODUCT------T##################
+        - id: product-service
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/v1/products/**
+        ################------MEDIA---------################
+        - id: media-service
+          uri: lb://MEDIA-SERVICE
+          predicates:
+            - Path=/api/v1/medias/**
+
+      globalcors:
+        cors-configurations:
+          "[/**]": # S'applique à toutes les routes
+            allowedOrigins:
+              - "http://127.0.0.1:4200"
+              - "http://localhost:4200"
+              - "http://192.168.43.94:4200"
+              - "https://votre-domaine.com"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - OPTIONS
+            allowedHeaders:
+              - "*"
+            exposedHeaders:
+              - "Authorization"
+              - "Content-Type"
+            allowCredentials: true
+
+
+server:
+  port: 8222
+  ssl:
+    enabled: true
+    key-store: classpath:keystore/keystore.p12
+    key-store-password: wiwadev
+    key-store-type: PKCS12
+
+eureka:
+  instance:
+    prefer-ip-address: true        # 👈 force Eureka à utiliser ton IP locale
+    hostname: ${EUREKA_INSTANCE_HOSTNAME:localhost}    #👈 (optionnel) force l'utilisation de localhost
+    instance-id: ${spring.application.name}:${server.port}

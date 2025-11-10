@@ -1,0 +1,14 @@
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <app-sidebar></app-sidebar>
+
+  <div
+    [class]="isSidebarOpen ? 'ml-64' : 'ml-20'"
+    class="transition-all duration-300"
+  >
+    <app-topbar></app-topbar>
+
+    <main class="p-6">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

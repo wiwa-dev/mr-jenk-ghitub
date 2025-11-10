@@ -1,0 +1,18 @@
+spring:
+  config:
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
+  application:
+    name: gateway-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_INSTANCE_HOSTNAME:http://localhost}:8761/eureka/
+      
+logging:
+  level:
+    root: INFO                # Niveau global par défaut
+    org.springframework.web: DEBUG   # Voir les requêtes HTTP
+    org.springframework.security: DEBUG # Voir les logs de Spring Security
+    org.springframework.cloud.gateway: DEBUG # (si c'est dans le gateway)
+    com.buy01.user: DEBUG    # Tes propres classes (package)

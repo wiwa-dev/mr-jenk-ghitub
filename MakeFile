@@ -1,0 +1,8 @@
+include .env
+export $(shell sed 's/=.*//' .env)
+
+push:
+	@if [ -z "$(msg)" ]; then echo "❌ Commit message required"; exit 1; fi
+	git add .
+	git commit -m "$(msg)" || echo "⚠️ Rien à commit"
+	git push https://$(GITEA_USER):$(GITEA_TOKEN)@learn.zone01dakar.sn/git/$(GITEA_REPO).git

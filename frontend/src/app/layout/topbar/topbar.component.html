@@ -1,0 +1,43 @@
+<header class="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-6">
+  <div class="flex items-center gap-4">
+    <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
+      Seller Dashboard
+    </h2>
+  </div>
+
+  <div class="flex items-center gap-4">
+    <button
+      (click)="toggleTheme()"
+      class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400 transition-colors"
+      title="Toggle theme"
+    >
+      @if (!isDarkMode) {
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+      </svg>
+      } @else {
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+      }
+    </button>
+
+    @if (currentUser) {
+    <div class="flex items-center gap-3 pl-4 border-l border-gray-200 dark:border-gray-700">
+      <div class="text-right">
+        <p class="text-sm font-medium text-gray-900 dark:text-white">
+          {{ currentUser.firstName }} {{ currentUser.lastName }}
+        </p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">
+          {{ currentUser.role }}
+        </p>
+      </div>
+      <div class="w-10 h-10 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center">
+        <span class="text-primary-600 dark:text-primary-400 font-semibold">
+          {{ currentUser.firstName?.charAt(0) }}{{ currentUser.lastName?.charAt(0) }}
+        </span>
+      </div>
+    </div>
+    }
+  </div>
+</header>

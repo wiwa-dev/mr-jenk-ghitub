@@ -13,7 +13,7 @@ class JwtUtilTest {
     @BeforeEach
     void setUp() {
         jwtUtil = new JwtUtil();
-        // Set a dummy secret key//
+        // Set a dummy secret key////
         ReflectionTestUtils.setField(jwtUtil, "secret", "mysecretkeymustbelongenoughforhmacsha256security");
         ReflectionTestUtils.setField(jwtUtil, "expiration", 3600000L);
     }

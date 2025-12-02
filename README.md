@@ -13,7 +13,7 @@ Develop an end-to-end e-commerce platform with Spring Boot microservices and Ang
 #### 2. Enhanced Database Design
 
 ![Database Design](diagrams/Database-Design.png)
-
+https://learn.zone01dakar.sn/git/root/public/src/branch/master/subjects/java/projects/buy-01/Database-Design.png
 
 #### 3. API Development Enhancement
 

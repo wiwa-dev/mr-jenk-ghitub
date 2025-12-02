@@ -10,7 +10,7 @@ spring:
   jackson:            # This property ensures that dates are serialized in a human-readable format instead of timestamps
     serialization:
       WRITE_DATES_AS_TIMESTAMPS: false
-# Configuration Kafka
+# Configuration Kafkas
   kafka:
     consumer:
       bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}

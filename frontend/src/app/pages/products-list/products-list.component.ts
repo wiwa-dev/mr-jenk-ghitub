@@ -43,7 +43,7 @@ export class ProductsListComponent implements OnInit {
         console.log(ProductInfo);
 
         this.productInfos = ProductInfo;
-        console.log(this.productInfos[0].medias[0]);
+        // console.log(this.productInfos[0].medias[0]);
 
         this.loading = false;
       },

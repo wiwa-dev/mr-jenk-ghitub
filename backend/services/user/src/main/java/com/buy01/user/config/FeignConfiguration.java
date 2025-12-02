@@ -14,9 +14,9 @@ import java.security.cert.X509Certificate;
 public class FeignConfiguration {
 
     /**
-     * Cette configuration crée un client Feign qui ignore la vérification SSL.
+     * Cette configuration crée un client Feign qui ignore la vérification SSL.//
      * Elle utilise le client par défaut de Feign sans dépendances externes.
-     * Approprié pour les communications en réseau interne sécurisé.
+     * Approprié pour les communications en réseau internes sécurisé.
      */
     @Bean
     public Client feignClient() {

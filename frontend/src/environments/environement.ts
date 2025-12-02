@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiGateway: "https://localhost:8222/api/v1",
+  apiGateway: "https://api.buy01.site/api/v1",
   cloudinary: {
     apiCloudinary: "https://api.cloudinary.com/v1_1/dkjehxae7/image/upload",
     avatarPreset: "avatars_preset",

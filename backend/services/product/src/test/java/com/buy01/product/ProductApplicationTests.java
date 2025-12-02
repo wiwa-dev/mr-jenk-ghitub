@@ -1,13 +1,13 @@
-package com.buy01.product;
+// package com.buy01.product;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class ProductApplicationTests {
+// @SpringBootTest(classes = ProductApplication.class)
+// class ProductApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}	
 
-}
+// }

@@ -22,13 +22,11 @@ spring:
             - Path=/api/v1/medias/**
 
       globalcors:
+        add-to-simple-url-handler-mapping: true
         cors-configurations:
-          "[/**]": # S'applique à toutes les routes
+          '[/**]':
             allowedOrigins:
-              - "http://127.0.0.1:4200"
-              - "http://localhost:4200"
-              - "http://192.168.43.94:4200"
-              - "https://votre-domaine.com"
+              - "https://www.buy01.site"
             allowedMethods:
               - GET
               - POST
@@ -36,11 +34,7 @@ spring:
               - DELETE
               - PATCH
               - OPTIONS
-            allowedHeaders:
-              - "*"
-            exposedHeaders:
-              - "Authorization"
-              - "Content-Type"
+            allowedHeaders: "*"
             allowCredentials: true
 
 
@@ -49,7 +43,7 @@ server:
   ssl:
     enabled: true
     key-store: classpath:keystore/keystore.p12
-    key-store-password: wiwadev
+    key-store-password: Dinamo22**
     key-store-type: PKCS12
 
 eureka:

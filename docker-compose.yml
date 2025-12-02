@@ -1,78 +1,14 @@
 services:
-  # =======================
-  # 🧩 MongoDB + Mongo Express
-  # =======================
-  mongodb:
-    image: mongo
-    container_name: mongo_db
-    ports:
-      - 27018:27017
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=wiwadev
-      - MONGO_INITDB_ROOT_PASSWORD=wiwadev
-    volumes:
-      - mongo:/data
-    networks:
-      - microservices-net
 
-  mongo-express:
-    image: mongo-express
-    container_name: mongo_express
-    restart: always
-    ports:
-      - 8081:8081
-    environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=wiwadev
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=wiwadev
-      - ME_CONFIG_MONGODB_SERVER=mongodb
-      - ME_CONFIG_BASICAUTH_USERNAME=admin
-      - ME_CONFIG_BASICAUTH_PASSWORD=admin
-    depends_on:
-      - mongodb
-    networks:
-      - microservices-net
-
-  # =======================
-  # 🦍 Kafka + Zookeeper
-  # =======================
-  zookeeper:
-    image: confluentinc/cp-zookeeper:7.3.3
-    container_name: zookeeper
-    environment:
-      ZOOKEEPER_SERVER_ID: 1
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-    ports:
-      - "22181:2181"
-    networks:
-      - microservices-net
-
-  kafka:
-    image: confluentinc/cp-kafka:7.3.3
-    container_name: ms_kafka
-    depends_on:
-      - zookeeper
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    networks:
-      - microservices-net
-
+  
   # =======================
   # 🧠 Config Server
   # =======================
   config-server:
-    build: 
-      context: ./backend/services/config-server
-      dockerfile: Dockerfile
+    image: wiwadev01/config-server:latest
     container_name: config_server
-    ports:
-      - "8888:8888"
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
     networks:
       - microservices-net
 
@@ -80,17 +16,15 @@ services:
   # 🔍 Discovery Server (Eureka)
   # =======================
   discovery:
-    build:
-      context: ./backend/services/discovery
-      dockerfile: Dockerfile
+    image: wiwadev01/discovery:latest
     container_name: discovery_server
-    ports:
-      - "8761:8761"
     depends_on:
       - config-server
+    ports:
+      - "8761:8761"
     environment:
       - CONFIG_SERVER_URL=http://config-server:8888
-      - EUREKA_INSTANCE_HOSTNAME=discovery		
+      - EUREKA_INSTANCE_HOSTNAME=discovery
     networks:
       - microservices-net
 
@@ -98,9 +32,7 @@ services:
   # 🌐 API Gateway
   # =======================
   gateway:
-    build:
-      context: ./backend/services/gateway
-      dockerfile: Dockerfile
+    image: wiwadev01/gateway:latest
     container_name: api_gateway
     ports:
       - "8222:8222"
@@ -116,14 +48,10 @@ services:
   # 👤 User Service
   # =======================
   user-service:
-    build:
-      context: ./backend/services/user
-      dockerfile: Dockerfile
+    image: wiwadev01/user-service:latest
     container_name: user_service
     depends_on:
-      - discovery
-      - mongodb
-      - kafka
+      - config-server
     environment:
       - CONFIG_SERVER_URL=http://config-server:8888
       - EUREKA_INSTANCE_HOSTNAME=http://discovery
@@ -137,14 +65,10 @@ services:
   # 🛍️ Product Service
   # =======================
   product-service:
-    build:
-      context: ./backend/services/product
-      dockerfile: Dockerfile
+    image: wiwadev01/product-service:latest
     container_name: product_service
     depends_on:
-      - discovery
-      - mongodb
-      - kafka
+      - config-server
     environment:
       - CONFIG_SERVER_URL=http://config-server:8888
       - EUREKA_INSTANCE_HOSTNAME=http://discovery
@@ -159,14 +83,10 @@ services:
   # 🖼️ Media Service
   # =======================
   media-service:
-    build:
-      context: ./backend/services/media
-      dockerfile: Dockerfile
+    image: wiwadev01/media-service:latest
     container_name: media_service
     depends_on:
-      - discovery
-      - mongodb
-      - kafka
+      - config-server
     environment:
       - CONFIG_SERVER_URL=http://config-server:8888
       - EUREKA_INSTANCE_HOSTNAME=http://discovery
@@ -178,33 +98,15 @@ services:
       - microservices-net
 
   # =======================
-  # 🚪 FrontEnd
+  # 🖼️ FrontEnd
   # =======================
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+  frontend-service:
+    image: wiwadev01/front-service:latest
     container_name: frontend_app
     ports:
       - "4200:80"
-    depends_on:
-      - gateway
     networks:
       - microservices-net
-
- # =======================
-  # 🛠️ Jenkins
-  # =======================
-  jenkins:
-    image: jenkins/jenkins:lts
-    container_name: jenkins
-    ports:
-      - "8080:8080"
-      - "50000:50000" 
-    networks:
-      - microservices-net
-    volumes:
-      - jenkins_home:/var/jenkins_home
 
 # =======================
 # 🔗 Network + Volumes
@@ -215,4 +117,3 @@ networks:
 
 volumes:
   mongo:
-  jenkins_home:

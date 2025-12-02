@@ -1,9 +1,9 @@
-package com.example.configserver;
+package com.buy01.configserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(classes = ConfigServerApplication.class)
 class ConfigServerApplicationTests {
 
     @Test

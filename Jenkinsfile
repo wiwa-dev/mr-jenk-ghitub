@@ -24,7 +24,7 @@ pipeline {
         stage('Detect Changed Services') {
             steps {
                 script {
-                    // Lister les fichiers modifiés au dernier commits
+                    // Lister les fichiers modifiés au dernier commit
                     def files = sh(script: 'git diff --name-only HEAD^ HEAD', returnStdout: true).trim().split('\n')
                     echo "📄 Fichiers modifiés : ${files}"
                     CHANGED_SERVICES = []

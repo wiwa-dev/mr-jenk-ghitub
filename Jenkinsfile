@@ -6,11 +6,6 @@ pipeline {
         maven 'maven6'
     } 
 
-    triggers {
-        // Pour webhook Gitea 
-        // ⚠ Requiert le plugin Gitea !!?
-        githubPush()
-    }
     
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')

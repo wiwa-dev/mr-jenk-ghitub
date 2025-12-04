@@ -221,6 +221,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh "docker-compose -f ${COMPOSE_FILE} pull"
+                sh 'chmod +x start-app.sh'
                 sh './start-app.sh'
             // echo '=== 🚀 Démarrage automatique des services Docker ==='
             // // # 2️⃣ Démarrer uniquement le Config Server
@@ -252,19 +253,8 @@ pipeline {
                     script {
                         echo '🔄 Rollback des services modifiés...'
 
-                        def services = ['user-service', 'product-service', 'media-service', 'front']
+                        def services = ['user-service', 'product-service', 'media-service', 'front-service','config-server','discovery','gateway']
                             services.each { svc ->
-                                echo "↩️ Rollback du service : ${svc}"
-
-                                // Pull de l'ancienne version
-                                sh """
-                        docker pull wiwadev01/${svc}-service:${DOCKER_IMAGE_TAG_PREV} || true
-                        docker tag wiwadev01/${svc}-service:${DOCKER_IMAGE_TAG_PREV} wiwadev01/${svc}-service:${DOCKER_IMAGE_TAG_LAST}
-                    """
-                            }
-
-                        def config = ['config-server', 'discovery', 'gateway']
-                        config.each { svc ->
                                 echo "↩️ Rollback du service : ${svc}"
 
                                 // Pull de l'ancienne version
@@ -272,11 +262,13 @@ pipeline {
                         docker pull wiwadev01/${svc}:${DOCKER_IMAGE_TAG_PREV} || true
                         docker tag wiwadev01/${svc}:${DOCKER_IMAGE_TAG_PREV} wiwadev01/${svc}:${DOCKER_IMAGE_TAG_LAST}
                     """
-                        }
+                            }
+
                     }
 
                     // 3️⃣ Redémarrer avec les anciennes images
                     echo '🚀 Redémarrage avec les images précédentes...'
+                    sh 'chmod +x start-app.sh'
                     sh './start-app.sh'
 
                     echo '✔ Rollback terminé'

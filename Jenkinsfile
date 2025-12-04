@@ -283,11 +283,11 @@ pipeline {
         }
         success {
             echo 'Pipeline executed successfully!'
-            slackSend channel: '#jenkins', message: 'Build Success - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)  ', teamDomain: 'jenkins-55k4809', tokenCredentialId: 'slack-cred'
+            slackSend channel: '#jenkins', message: "Build Success - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", teamDomain: 'jenkins-55k4809', tokenCredentialId: 'slack-cred'
         }
         failure {
             echo 'Pipeline failed!'
-            slackSend channel: '#jenkins', message: 'Build Failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)', teamDomain: 'jenkins-55k4809', tokenCredentialId: 'slack-cred'
+            slackSend channel: '#jenkins', message: "Build Failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)", teamDomain: 'jenkins-55k4809', tokenCredentialId: 'slack-cred'
         }
     }
 } // <-- fin du pipeline

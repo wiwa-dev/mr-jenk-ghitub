@@ -187,6 +187,7 @@ pipeline {
                         svc -> ["build-docker-${svc}": {
                             dir("backend/services/${svc}") {
                                 sh "docker build -t wiwadev01/${svc}:${DOCKER_IMAGE_TAG_LAST} ."
+                                sh "docker push wiwadev01/${svc}:${DOCKER_IMAGE_TAG_LAST}"
                             }
                         }]
                     }
@@ -206,6 +207,7 @@ pipeline {
                         svc -> ["build-docker-${svc}": {
                             dir("backend/services/${svc}") {
                                 sh "docker build -t wiwadev01/${svc}-service:${DOCKER_IMAGE_TAG_LAST} ."
+                                sh "docker push wiwadev01/${svc}-service:${DOCKER_IMAGE_TAG_LAST}"
                             }
                         }]
                     }
@@ -222,6 +224,7 @@ pipeline {
             steps {
                 dir('frontend') {
                     sh "docker build -t wiwadev01/front-service:${DOCKER_IMAGE_TAG_LAST} ."
+                    sh "docker push wiwadev01/front-service:${DOCKER_IMAGE_TAG_LAST}"
                 }
             }
         }
@@ -234,10 +237,6 @@ pipeline {
             }
 
             post {
-                success{
-                    sh 'chmod +x push-img-latest.sh'
-                    sh './push-img-latest.sh'   
-                }
                 failure {
                     echo '❌ Échec du déploiement → Rollback...'
 

@@ -51,7 +51,7 @@ export default function (config) {
       }
     },
 
-    // 🔥 Use our NoSandbox headless browser in CI ///
+    // 🔥 Use our NoSandbox headless browser in CI ////
     browsers: ['ChromeHeadlessNoSandbox'],
 
     singleRun: true,

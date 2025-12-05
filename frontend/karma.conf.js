@@ -10,38 +10,51 @@ export default function (config) {
       require('karma-junit-reporter'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
+
     client: {
-      jasmine: {
-        // you can add configuration options for Jasmine here
-        // the possible options are listed at https://jasmine.github.io/api/edge/Configuration.html
-        // for example, you can disable the random execution with `random: false`
-        // or set a specific seed with `seed: 4321`
-      },
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
+      jasmine: {},
+      clearContext: false
     },
+
     jasmineHtmlReporter: {
-      suppressAll: true // removes the duplicated traces
+      suppressAll: true
     },
+
     coverageReporter: {
       dir: require('path').join(__dirname, './coverage/buy01'),
       subdir: '.',
-      reporters: [
-        { type: 'html' },
-        { type: 'text-summary' }
-      ]
+      reporters: [{ type: 'html' }, { type: 'text-summary' }]
     },
+
     junitReporter: {
       outputDir: 'reports/junit',
       outputFile: 'front-tests.xml',
       useBrowserName: false
     },
+
     reporters: ['progress', 'kjhtml', 'junit'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: false,
-    browsers: ['ChromeHeadless'],
+
+    // 🔥 IMPORTANT : Custom headless launcher for Jenkins
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: [
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-gpu',
+          '--disable-dev-shm-usage'
+        ]
+      }
+    },
+
+    // 🔥 Use our NoSandbox headless browser in CI
+    browsers: ['ChromeHeadlessNoSandbox'],
+
     singleRun: true,
-    restartOnFileChange: true
+    restartOnFileChange: false
   });
 };

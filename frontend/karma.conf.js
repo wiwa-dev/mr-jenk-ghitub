@@ -40,7 +40,7 @@ export default function (config) {
 
     // 🔥 IMPORTANT : Custom headless launcher for Jenkins
     customLaunchers: {
-      ChromeHeadlessCI: {
+      ChromeHeadlessNoSandbox: {
         base: 'ChromeHeadless',
         flags: [
           '--no-sandbox',
@@ -52,7 +52,7 @@ export default function (config) {
     },
 
     // 🔥 Use our NoSandbox headless browser in CI
-    browsers: ['ChromeHeadless','ChromeHeadlessCI'],
+    browsers: ['ChromeHeadlessNoSandbox'],
 
     singleRun: true,
     restartOnFileChange: false

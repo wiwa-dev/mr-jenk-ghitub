@@ -259,7 +259,7 @@ pipeline {
                             }
                     }
 
-                    // 3️⃣ Redémarrer avec les anciennes images
+                    // 3️⃣ Redémarrer avec les anciennes images ...
                     echo '🚀 Redémarrage avec les images précédentes...'
                     sh 'chmod +x start-app.sh'
                     sh './start-app.sh'

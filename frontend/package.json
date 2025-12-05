@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "npx ng serve",
     "build": "npx ng build",
-    "test": "mkdir -p reports/junit && npx ng test --watch=false --browsers=ChromeHeadless"
+    "test": "npx ng test --watch=false --browsers=ChromeHeadless"
   },
   "dependencies": {
     "@angular/animations": "^20.0.0",

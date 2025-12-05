@@ -27,7 +27,7 @@ pipeline {
                 sh 'echo $DOCKER_HUB_CREDENTIALS_PSW | docker login -u $DOCKER_HUB_CREDENTIALS_USR --password-stdin'
             }
         }
-        
+
         stage('Backup Current Version') {
             steps {
                 sh 'chmod +x rollback.sh'
@@ -101,18 +101,21 @@ pipeline {
                 }
             }
         }
-        // stage('Unit Tess Frontend Services') {
-        //     when {
-        //         expression {
-        //             FRONTEND_CHANGED
-        //         }
-        //     }
-        //     steps {
-        //         script {
-        //             // TODO
-        //         }
-        //     }
-        // }
+        stage('Unit Tess Frontend Services') {
+            when {
+                expression {
+                    FRONTEND_CHANGED
+                }
+            }
+            steps {
+                script {
+                    dir('frontend') {
+                        sh 'npm ci'
+                        sh 'npm run test'
+                    }
+                }
+            }
+        }
         stage('Build Backend Server Config') {
             when {
                 expression {
@@ -157,7 +160,6 @@ pipeline {
             }
             steps {
                 dir('frontend') {
-                    sh 'npm ci'
                     sh 'npx ng build --configuration production'
                 }
             }

@@ -5,7 +5,7 @@ pipeline {
         jdk 'jdk17'
         maven 'maven6'
     }
-
+//
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
         DOCKER_IMAGE_TAG_LAST = 'latest'
